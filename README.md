@@ -39,6 +39,8 @@ Native scrolling, skip link, visible focus states, semantic headings and focus-t
 
 npm run build creates dist with prerendered HTML, optimized split JavaScript, CSS, favicon, robots and sitemap. Upload dist to a static web host. Sites configuration is in .openai/hosting.json. The starter's optional Next/Vinext configuration and UI catalog are retained for future expansion; production scripts use the static React pipeline to avoid Windows subprocess incompatibilities encountered with the initial development server.
 
+GitHub Pages deployment is automated by `.github/workflows/deploy-pages.yml`. Push to `main` to build and publish the site at https://talhamumtaz26.github.io/Portofolio/. The workflow adds the repository subpath to static asset URLs without changing the local or other-host build.
+
 Update profile.siteUrl before using another domain. Rebuild after content edits. The build generates canonical/Open Graph/X metadata and Person schema. No social preview image was invented. Real media can be added later. A private Sites deployment is owner-only until its sharing is changed through Sites.
 
 ## Content still to supply
