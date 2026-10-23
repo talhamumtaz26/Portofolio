@@ -269,6 +269,20 @@ body::after {
     opacity: .025;
     pointer-events: none;
 }
+@media (min-width: 1920px) {
+    .hero.hero-section::before,
+    .hero.hero-section::after {
+        right: auto;
+        left: 50%;
+        width: 100vw;
+        transform: translateX(-50%);
+    }
+
+    .hero.hero-section::before {
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+        mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
+    }
+}
 html[data-theme="dark"] .hero.hero-section::before {
     background: radial-gradient(
         ellipse 70% 80% at 50% 44%,
@@ -378,5 +392,3 @@ html[data-theme="dark"] .contact-form { background: var(--surface); }
 .contact-form .button.primary { margin-top: 12px; }
 html[data-theme="light"] .contact-form input::placeholder,
 html[data-theme="light"] .contact-form textarea::placeholder { color: #667068; opacity: 1; }
-
-
