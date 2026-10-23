@@ -5,7 +5,7 @@
     min-height: calc(100dvh - 88px);
     grid-template-rows: 1fr auto;
     align-items: center;
-    overflow-x: clip;
+    overflow: clip;
     isolation: isolate;
     padding-block: 0;
 }
@@ -850,29 +850,11 @@ html[data-theme="dark"] .hero-dark-vignette {
     z-index: 1;
     inset: 0;
     display: block;
-    background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, transparent 24%, transparent 76%, rgba(0,0,0,0.75) 100%);
+    background: linear-gradient(to right, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0) 24%, rgba(0,0,0,0) 76%, rgba(0,0,0,0.75) 100%);
     pointer-events: none;
 }
 html[data-theme="dark"] .hero-dark-vignette--mobile { display: none; }
 html[data-theme="dark"] .hero.hero-section::before { background: radial-gradient(ellipse 70% 80% at 50% 44%, color-mix(in srgb, var(--hero-decor-glow) 4%, transparent) 0%, transparent 65%); }
-
-@media (min-width: 1920px) {
-    .hero-decoration,
-    .hero-desktop-layer,
-    html[data-theme="dark"] .hero-dark-vignette:not(.hero-dark-vignette--mobile) {
-        top: 0;
-        bottom: 0;
-        right: auto;
-        left: 50%;
-        width: 100vw;
-        transform: translateX(-50%);
-    }
-
-    html[data-theme="dark"] .hero-dark-vignette:not(.hero-dark-vignette--mobile) {
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
-        mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 86%, transparent 100%);
-    }
-}
 
 @media (max-width: 899px) {
     html[data-theme="dark"] .hero-dark-vignette:not(.hero-dark-vignette--mobile) { display: none; }
@@ -885,5 +867,7 @@ html[data-theme="dark"] .hero.hero-section::before { background: radial-gradient
         pointer-events: none;
     }
 }
+
+
 
 
