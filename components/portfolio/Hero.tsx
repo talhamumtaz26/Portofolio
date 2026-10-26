@@ -58,12 +58,12 @@ const mobileTiles: (HeroTileData & { x: number; y: number; size: number; jitter:
 
 function MobileShowcase() {
     return <div className="hero-mobile-layout">
+        <div className="hero-dark-vignette hero-dark-vignette--mobile" aria-hidden="true" />
         <div className="hero-mobile-stage">
             <div className="hero-mobile-rings" aria-hidden="true">
                 <span className="hero-mobile-ring" />
                 <span className="hero-mobile-ring hero-mobile-ring--dashed" />
             </div>
-            <div className="hero-dark-vignette hero-dark-vignette--mobile" aria-hidden="true" />
             <div className="hero-mobile-tiles" aria-hidden="true">
                 {mobileTiles.map(tile => <div
                     className={`hero-mobile-tile hero-tile--${tile.name.toLowerCase()}`}

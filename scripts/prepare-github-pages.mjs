@@ -18,7 +18,7 @@ async function walk(directory) {
 
     let content = await fs.readFile(filePath, 'utf8');
     content = content
-      .replace(/(["'`])\/(?![/>]|Portofolio\/)/g, `$1${basePath}/`)
+      .replace(/(["'`])\/(?!\/|Portofolio\/)/g, `$1${basePath}/`)
       .replace(/url\(\/(?!\/|Portofolio\/)/g, `url(${basePath}/`)
       .replaceAll('https://talha-portofolio.vercel.app', origin);
     await fs.writeFile(filePath, content);
