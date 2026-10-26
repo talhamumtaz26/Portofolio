@@ -1,82 +1,103 @@
-# Talha Mumtaz — Developer Portfolio
+<div align="center">
 
-A complete React + TypeScript portfolio with server-rendered static HTML, Tailwind CSS, accessible Radix dialogs and a small, dynamically loaded native WebGL sculpture. No AI-generated project screenshots, fabricated testimonials, dates, employers or results are included.
+# Talha Mumtaz
+
+### WordPress · E-commerce · Web Development
+
+An expressive, responsive portfolio built to showcase selected projects, experience, and the work behind them.
+
+[![Live portfolio](https://img.shields.io/badge/Portfolio-Live-3DA46D?style=for-the-badge)](https://talhamumtaz26.github.io/Portofolio/)
+[![React](https://img.shields.io/badge/React-19-20232A?style=flat&logo=react)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+
+</div>
+
+---
+
+## The portfolio
+
+This site introduces **Talha Mumtaz**, a computer science student and developer focused on WordPress, e-commerce, and modern web applications. It brings selected work, skills, experience, and contact options together in one place.
+
+The visual direction pairs a bold typographic hero with floating technology tiles, orbital details, and a restrained green accent. Light and dark themes, responsive layouts, and reduced-motion support make the experience adapt to the visitor.
+
+## Featured work
+
+| Project | What it is | Built with |
+| --- | --- | --- |
+| **La Casa De Fashion** | A customized apparel storefront | WordPress, WooCommerce, Elementor, Astra Pro |
+| **WeatherWizard** | A full-stack weather application | React, Express, TypeScript, APIs, Capacitor |
+| **Watchly** | Movie and TV discovery and tracking | React, TMDb API, Firebase, Capacitor |
+
+Project details and available demos are shown on the [live portfolio](https://talhamumtaz26.github.io/Portofolio/).
+
+## Built with
+
+- **React 19** and **TypeScript** for the interactive interface
+- **Custom static build pipeline** for prerendered HTML and optimized browser bundles
+- **Tailwind CSS 4** and locally hosted fonts for the visual system
+- **Lucide** icons and locally stored project and technology artwork
+- **GitHub Actions and GitHub Pages** for deployment
+
+The production build prerenders the page, creates split JavaScript and minified CSS, and copies static assets into `dist/`.
 
 ## Run locally
 
-Requires Node.js 22.13 or newer and npm.
+Requires **Node.js 22.13 or newer** and **npm**.
 
-1. Run npm ci.
-2. Run npm run dev.
-3. Open http://127.0.0.1:5187.
+```bash
+npm ci
+npm run dev
+```
 
-The preview serves a production-style static build. After editing, run npm run build and refresh the browser. npm start serves an existing build. npm run typecheck verifies TypeScript. No environment variables or API keys are required. Contact links open the visitor's email application; no email is sent by this site.
+Open **http://127.0.0.1:5187**. The development command builds the site and serves the local static output. After making changes, run `npm run build` and refresh the browser.
 
-## Edit content
+```bash
+npm run build      # Build the production site into dist/
+npm start          # Serve the existing dist/ build locally
+npm run typecheck  # Check TypeScript
+npm run lint       # Run ESLint
+```
 
-- data/profile.ts: identity, headline, copy, real contact/social links, deployment origin and all SEO metadata.
-- data/projects.ts: the three project records and expandable case study content. Each supports title, category, description, technologies, image, gallery, liveUrl, githubUrl, featured, year, caseStudy, accent and optional video. Keep unknown values null. Missing links are displayed as unavailable, never as fake buttons.
-- data/content.ts: skill groups, experience entries, services and optional real testimonials. Testimonials are hidden while the array is empty.
-- components/portfolio: reusable navigation, hero, project presentation, sections and motion components.
-- app/globals.css: shared colors, typography, layouts and breakpoints.
-- app/static-entry.tsx: static HTML and Person structured data.
-- scripts/build-static.mjs: React prerendering, split client bundles, compiled CSS and public assets.
-- scripts/serve-static.mjs: local static server on port 5187.
+## Update the content
 
-## Replace project media
+| File | Purpose |
+| --- | --- |
+| `data/profile.ts` | Name, headline, biography, links, and SEO copy |
+| `data/projects.ts` | Project descriptions, technologies, links, and case studies |
+| `data/content.ts` | Skills, experience, services, and testimonials |
+| `data/contact.ts` | Contact form endpoint configuration |
+| `components/portfolio/` | Navigation, hero, projects, sections, and interactions |
+| `app/globals.css` | Shared design tokens, typography, layout, and theme styling |
+| `public/` | Fonts, icons, images, and other static assets |
 
-Put optimized WebP/AVIF images in public/projects. Set a project's image to /projects/your-image.webp. Add gallery entries such as { src: '/projects/detail.webp', alt: 'A descriptive caption' }. Set video to a local MP4/WebM URL to render an accessible controlled video using image as its poster. GIF files also work through image. The typography covers are explicitly labeled concepts, not screenshots; they disappear when real media is configured.
+Add real project media under `public/projects/`, then reference it from the matching project record. Keep project facts, dates, outcomes, and links accurate; leave unknown details unset.
 
-## Add a project
+The contact form submits to the configured Formspree endpoint. The site does not maintain its own submission database.
 
-Duplicate a record in data/projects.ts, give it a unique slug, and fill only verified facts. Set featured: true for a full-width lead treatment. Keep image, dates, links and undocumented implementation/challenges/results null until available. Add supplied screenshots to gallery. Titles wrap to accommodate long names. Project detail dialogs are keyboard accessible and restore focus when closed.
+## Accessibility and motion
 
-## Motion and accessibility
+- Semantic headings, a skip link, and visible keyboard focus states
+- Keyboard-accessible navigation and project details
+- Responsive mobile navigation and touch-friendly controls
+- Reduced-motion support for both the operating-system preference and the site control
+- Decorative motion that stays separate from essential content
 
-Native scrolling, skip link, visible focus states, semantic headings and focus-trapped dialogs. Mobile navigation locks background scrolling and moves focus to the chosen section. The WebGL module is deferred, capped at 1.5 device pixel ratio, paused offscreen/in hidden tabs, and not loaded below 761px. A static orbital fallback stays visible if WebGL fails. The desktop cursor is decorative and never replaces the operating-system pointer. Both OS reduced-motion preference and the footer control suppress movement. The local preference uses browser storage only.
+## Deploy
 
-## Build and deploy
+Push to `main` to trigger the GitHub Actions workflow in `.github/workflows/deploy-pages.yml`. The workflow installs dependencies, runs type checking and linting, builds the static site, prepares the GitHub Pages asset paths, and deploys `dist/`.
 
-npm run build creates dist with prerendered HTML, optimized split JavaScript, CSS, favicon, robots and sitemap. Upload dist to a static web host. Sites configuration is in .openai/hosting.json. The starter's optional Next/Vinext configuration and UI catalog are retained for future expansion; production scripts use the static React pipeline to avoid Windows subprocess incompatibilities encountered with the initial development server.
+The configured Pages address is **https://talhamumtaz26.github.io/Portofolio/**. Update `profile.siteUrl` in `data/profile.ts` if deploying to a different canonical domain.
 
-GitHub Pages deployment is automated by `.github/workflows/deploy-pages.yml`. Push to `main` to build and publish the site at https://talhamumtaz26.github.io/Portofolio/. The workflow adds the repository subpath to static asset URLs without changing the local or other-host build.
+## Contact
 
-Update profile.siteUrl before using another domain. Rebuild after content edits. The build generates canonical/Open Graph/X metadata and Person schema. No social preview image was invented. Real media can be added later. A private Sites deployment is owner-only until its sharing is changed through Sites.
+- **Email:** [talhamalik2604@gmail.com](mailto:talhamalik2604@gmail.com)
+- **GitHub:** [@talhamumtaz26](https://github.com/talhamumtaz26)
+- **LinkedIn:** [Muhammad Talha Mumtaz](https://www.linkedin.com/in/muhammad-talha-mumtaz/)
 
-## Content still to supply
+---
 
-Actual project screenshots/video; detailed implementation and challenge notes; verified results (if any); project dates; Watchly repository/demo and WeatherWizard live-demo URLs; employment dates or employers; real testimonials. All have editable fields or arrays. No fabricated data fills these gaps.
+<div align="center">
 
-## Reference direction
+Designed and built by **Talha Mumtaz** · Karachi, Pakistan
 
-The brief's supplied references informed the requested hierarchy, restraint and interaction goals. No reference code, copy, branding or layouts were copied. Some reference pages were unavailable to the web reader. This design is original.
-
-## Color themes
-Use Light mode / Dark mode in the desktop navigation or mobile menu. The choice is stored locally and applied before the page paints on reload. Switching crossfades the page colors over 600ms and respects both OS and site reduced-motion preferences. ThemeToggle.tsx contains the control; paired colors and transition rules are in app/globals.css.
-
-
-## Skills badges
-Edit the displayed badge rows in components/portfolio/Skills.tsx. Responsive light/dark styling is in app/globals.css. Brand SVG assets are stored locally in public/logos, sourced from Devicon v2.17.0 (https://github.com/devicons/devicon) and Simple Icons (https://simpleicons.org). AI basics uses a neutral CPU icon because it is a concept rather than a brand.
-
-
-
-## Typography
-Locally hosted Anton supplies the condensed display type; DM Sans supplies the regular navigation type. Both are distributed under the SIL Open Font License, with license files in public/fonts. Display headings use centered numbers above uppercase section names.
-
-
-The large hero name uses locally hosted Barlow Condensed ExtraBold (800), with its SIL license in public/fonts. The DM Sans desktop menu is 15px; the logo reads Talha.
-
-
-## Contact form
-ContactForm.tsx validates name, email and message and opens a prefilled mailto draft. It does not send messages itself or store submissions; visitors send from their email application. No delivery backend is configured.
-
-
-Direct-delivery preparation: set contactFormEndpoint in data/contact.ts to a verified Formspree endpoint. The form then posts asynchronously, shows sending/error/success states, and resets only on success. This is unconfigured and delivery has not been tested. With an empty endpoint it remains Create email draft. Formspree docs: https://help.formspree.io/articles/building-your-form/submit-forms-with-javascript-ajax/
-
-
-Formspree is now configured with the user-provided endpoint in data/contact.ts. The active form submits directly and displays Send message. Local mocked success/error tests passed; live inbox delivery has not been tested.
-
-
-## Resume download
-Place your real PDF at public/resume.pdf (inside outputs), then run npm run build. Desktop and mobile Resume links download it as Talha-Mumtaz-Resume.pdf. No placeholder PDF is included; the download becomes available after you add the file and rebuild.
-
+</div>
