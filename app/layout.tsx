@@ -10,6 +10,7 @@ export const metadata: Metadata = {
     icons: { icon: '/favicon.svg', apple: '/apple-touch-icon.png' },
     openGraph: {
         type: 'website',
+        siteName: 'Talha Mumtaz',
         title: pageTitle,
         description: pageDescription,
         url: siteOrigin,
