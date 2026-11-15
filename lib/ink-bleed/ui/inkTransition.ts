@@ -10,7 +10,7 @@ export interface Point {
 }
 
 const EASE = 'power3.out';
-const FADE_OUT = 0.15;
+const FADE_OUT = 0.4;
 const RESIZE_DEBOUNCE_MS = 250;
 const SCROLL_DEBOUNCE_MS = 450;
 /** CSS cross-fade used without WebGL2, with reduced motion, or before snapshots are ready. */

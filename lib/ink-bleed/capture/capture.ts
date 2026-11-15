@@ -45,8 +45,41 @@ export function layoutKey(scale: number): string {
   return `${width}x${height}@${viewportHeight}:${Math.round(window.scrollX)},${Math.round(window.scrollY)}@${scale}`;
 }
 
+/** Wait for images in the captured viewport so snapshots don't freeze lazy-load placeholders. */
+async function waitForVisibleImages(): Promise<void> {
+  const visible = Array.from(document.images).filter((img) => {
+    const rect = img.getBoundingClientRect();
+    return rect.width > 0 && rect.height > 0 && rect.bottom > 0 && rect.top < window.innerHeight;
+  });
+
+  await Promise.all(visible.map(async (img) => {
+    if (!img.complete || img.naturalWidth === 0) {
+      // A lazy image can report complete while still having no loaded resource. These
+      // images are in the captured viewport, so promote them before waiting for load.
+      if (img.loading === 'lazy') img.loading = 'eager';
+      await new Promise<void>((resolve) => {
+        const done = () => {
+          window.clearTimeout(timeout);
+          img.removeEventListener('load', done);
+          img.removeEventListener('error', done);
+          resolve();
+        };
+        const timeout = window.setTimeout(done, 2500);
+        img.addEventListener('load', done, { once: true });
+        img.addEventListener('error', done, { once: true });
+      });
+    }
+
+    if (img.complete && img.naturalWidth > 0 && typeof img.decode === 'function') {
+      await img.decode().catch(() => undefined);
+    }
+  }));
+
+}
+
 export async function capturePage(theme: Theme, scale: number, maxTextureSize: number): Promise<Snapshot> {
   const t0 = performance.now();
+  await waitForVisibleImages();
   const key = layoutKey(scale);
   const { width } = documentSize();
   const height = document.documentElement.clientHeight;
@@ -75,6 +108,15 @@ export async function capturePage(theme: Theme, scale: number, maxTextureSize: n
     foreignObjectRendering: true,
     onclone: (doc) => {
       doc.documentElement.dataset.theme = theme;
+      // The foreignObject snapshot is serialized as an SVG data URL, where root-relative
+      // image paths no longer resolve against the live page's origin.
+      doc.querySelectorAll<HTMLImageElement>('img[src]').forEach((img) => {
+        img.loading = 'eager';
+        const src = img.getAttribute('src');
+        if (src && !src.startsWith('data:')) {
+          img.src = new URL(src, document.baseURI).href;
+        }
+      });
       // These sections are skipped while outside the live viewport. Restore their real
       // content in the full-page snapshot so the reveal remains complete after scrolling.
       doc.querySelectorAll<HTMLElement>('#about, #skills, #experience, #services, #contact, .portfolio-footer')
