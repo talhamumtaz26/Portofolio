@@ -115,15 +115,35 @@ export function Navbar() {
         }
         void transition.ready.then(() => {
             const desktop = matchMedia('(pointer: fine) and (min-width: 900px)').matches;
-            if (!desktop) return;
             const bounds = toggleButton.getBoundingClientRect();
             const x = bounds.left + bounds.width / 2;
             const y = bounds.top + bounds.height / 2;
             const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
-            root.animate(
-                [{ clipPath: `circle(0px at ${x}px ${y}px)` }, { clipPath: `circle(${radius}px at ${x}px ${y}px)` }],
-                { duration: 520, easing: 'cubic-bezier(0.22, 0.61, 0.36, 1)', pseudoElement: '::view-transition-new(root)' } as KeyframeAnimationOptions & { pseudoElement: string },
-            );
+            const options = { duration: desktop ? 520 : 760, easing: 'cubic-bezier(0.22, 0.61, 0.36, 1)', pseudoElement: '::view-transition-new(root)' } as KeyframeAnimationOptions & { pseudoElement: string };
+            if (desktop) {
+                root.animate(
+                    [{ clipPath: `circle(0px at ${x}px ${y}px)` }, { clipPath: `circle(${radius}px at ${x}px ${y}px)` }],
+                    options,
+                );
+                return;
+            }
+
+            // Organic, click-originating ink edge for touch screens. The reveal stays in
+            // the view-transition snapshot so the live page and its layout are untouched.
+            const pointCount = 40;
+            const progressPoints = [0.001, 0.16, 0.34, 0.54, 0.76, 1];
+            const inkFrames = progressPoints.map(progress => {
+                const points = Array.from({ length: pointCount }, (_, index) => {
+                    const angle = (index / pointCount) * Math.PI * 2;
+                    const grain = Math.sin(index * 1.73 + progress * 10) * 0.65 + Math.sin(index * 0.71 - progress * 14) * 0.35;
+                    const edge = progress === 1 ? radius + 8 : radius * progress * (1 + grain * 0.13 * (1 - progress * 0.45));
+                    const px = x + Math.cos(angle) * edge;
+                    const py = y + Math.sin(angle) * edge;
+                    return `${(px / innerWidth) * 100}% ${(py / innerHeight) * 100}%`;
+                });
+                return { clipPath: `polygon(${points.join(',')})`, offset: progress };
+            });
+            root.animate(inkFrames, options);
         }).catch(() => {});
         const finish = () => {
             root.classList.remove('theme-switching');
