@@ -172,15 +172,7 @@ html[data-tab-hidden="true"] *::after { animation-play-state: paused !important;
 
 html.theme-switching *,
 html.theme-switching *::before,
-html.theme-switching *::after {
-    transition:
-        background-color 0.4s ease,
-        border-color 0.4s ease,
-        color 0.4s ease,
-        fill 0.4s ease,
-        stroke 0.4s ease,
-        box-shadow 0.4s ease !important;
-}
+html.theme-switching *::after { transition: none !important; }
 html.theme-switching .hero *,
 html.theme-switching .hero *::before,
 html.theme-switching .hero *::after { animation-play-state: paused !important; }
